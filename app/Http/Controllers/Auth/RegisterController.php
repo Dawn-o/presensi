@@ -23,9 +23,20 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'employee_id' => ['required', 'string', 'max:20', 'unique:users'],
+            'employee_id' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'name.required' => 'Nama wajib diisi',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter',
+            'employee_id.required' => 'NIP/NIK wajib diisi',
+            'employee_id.unique' => 'NIP/NIK sudah terdaftar',
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email tidak valid',
+            'email.unique' => 'Email sudah terdaftar',
+            'password.required' => 'Password wajib diisi',
+            'password.min' => 'Password minimal 8 karakter',
+            'password.confirmed' => 'Konfirmasi password tidak cocok'
         ]);
     }
 
