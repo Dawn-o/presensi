@@ -12,12 +12,14 @@ class PresenceController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        // Set timezone to WITA
+        config(['app.timezone' => 'Asia/Makassar']);
     }
 
     public function index()
     {
         $today = Presence::where('user_id', auth()->id())
-            ->whereDate('created_at', Carbon::today())
+            ->whereDate('created_at', Carbon::now('Asia/Makassar')->toDateString())
             ->first();
         
         return view('presence.index', compact('today'));
@@ -32,14 +34,14 @@ class PresenceController extends Controller
             return back()->with('error', 'Absensi hanya bisa dilakukan di jaringan Kost Ungu.');
         }
 
-        $now = Carbon::now();
+        $now = Carbon::now('Asia/Makassar');
         $presence = Presence::where('user_id', auth()->id())
-            ->whereDate('created_at', Carbon::today())
+            ->whereDate('created_at', $now->toDateString())
             ->first();
 
         if (!$presence) {
             // Check in
-            $status = $now->hour >= 9 ? 'late' : 'present';
+            $status = $now->hour >= 8 ? 'late' : 'present';
             Presence::create([
                 'user_id' => auth()->id(),
                 'check_in' => $now,
@@ -60,8 +62,9 @@ class PresenceController extends Controller
 
     public function recap()
     {
-        $month = request('month', Carbon::now()->month);
-        $year = request('year', Carbon::now()->year);
+        $now = Carbon::now('Asia/Makassar');
+        $month = request('month', $now->month);
+        $year = request('year', $now->year);
 
         $presences = Presence::where('user_id', auth()->id())
             ->whereMonth('created_at', $month)
