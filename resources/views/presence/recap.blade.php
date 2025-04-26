@@ -1,50 +1,82 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-7xl mx-auto">
-        <div class="bg-white shadow rounded-lg">
-            <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">
-                    Rekap Absensi - {{ Carbon\Carbon::create(null, $month)->translatedFormat('F') }} {{ $year }}
-                </h3>
+<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white shadow rounded-lg">
+        <div class="p-4 sm:p-6">
+            <!-- Header Section -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 truncate">
+                        Rekap Kehadiran {{ auth()->user()->is_admin && $user->id !== auth()->id() ? $user->name : '' }}
+                    </h2>
+                </div>
+
+                <!-- Filters Section -->
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <!-- Month/Year Filter -->
+                    <form action="{{ route('presence.recap') }}" method="GET" 
+                          class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                        @if(request('user_id'))
+                            <input type="hidden" name="user_id" value="{{ request('user_id') }}">
+                        @endif
+                        
+                        <select name="month" 
+                                class="w-full sm:w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            @foreach(range(1, 12) as $m)
+                                <option value="{{ $m }}" {{ $month == $m ? 'selected' : '' }}>
+                                    {{ Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <select name="year" 
+                                class="w-full sm:w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            @foreach(range(date('Y'), date('Y')-5) as $y)
+                                <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
+                                    {{ $y }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <button type="submit" 
+                                class="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4v16M8 4v16M15 4v16M21 4v16" />
+                            </svg>
+                            Filter
+                        </button>
+                    </form>
+
+                    <!-- Admin User Selection -->
+                    @if(auth()->user()->is_admin)
+                    <div class="w-full sm:w-auto">
+                        <form action="{{ route('presence.recap') }}" method="GET">
+                            <select name="user_id" 
+                                    onchange="this.form.submit()"
+                                    class="w-full block pl-3 pr-10 py-2 text-base border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="">Pilih Karyawan</option>
+                                @foreach($users as $u)
+                                    <option value="{{ $u->id }}" {{ $user->id === $u->id ? 'selected' : '' }}>
+                                        {{ $u->name }} ({{ $u->employee_id }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            <input type="hidden" name="month" value="{{ $month }}">
+                            <input type="hidden" name="year" value="{{ $year }}">
+                        </form>
+                    </div>
+                    @endif
+                </div>
             </div>
 
-            <div class="px-4 py-5 sm:p-6">
-                <form class="mb-6">
-                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                        <div>
-                            <select name="month"
-                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                @for ($i = 1; $i <= 12; $i++)
-                                    <option value="{{ $i }}" {{ $i == $month ? 'selected' : '' }}>
-                                        {{ Carbon\Carbon::create(null, $i)->translatedFormat('F') }}
-                                    </option>
-                                @endfor
-                            </select>
-                        </div>
-                        <div>
-                            <select name="year"
-                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                @for ($i = 2023; $i <= date('Y'); $i++)
-                                    <option value="{{ $i }}" {{ $i == $year ? 'selected' : '' }}>
-                                        {{ $i }}
-                                    </option>
-                                @endfor
-                            </select>
-                        </div>
-                        <div>
-                            <button type="submit"
-                                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Tampilkan
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                <div class="space-y-8">
-                    <div>
-                        <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Kehadiran</h3>
-                        <div class="overflow-x-auto">
+            <!-- Tables Section -->
+            <div class="mt-8 space-y-8">
+                <!-- Presence Table -->
+                <div class="overflow-hidden">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Kehadiran</h3>
+                    <div class="-mx-4 sm:-mx-6 lg:-mx-8 overflow-x-auto">
+                        <div class="inline-block min-w-full align-middle">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
@@ -96,15 +128,18 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            <div class="mt-4">
-                                {{ $presences->appends(['month' => $month, 'year' => $year])->links() }}
-                            </div>
                         </div>
                     </div>
+                    <div class="mt-4 px-4 sm:px-0">
+                        {{ $presences->appends(['month' => $month, 'year' => $year])->links() }}
+                    </div>
+                </div>
 
-                    <div>
-                        <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Izin/Cuti</h3>
-                        <div class="overflow-x-auto">
+                <!-- Leave Requests Table -->
+                <div class="overflow-hidden">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Izin/Cuti</h3>
+                    <div class="-mx-4 sm:-mx-6 lg:-mx-8 overflow-x-auto">
+                        <div class="inline-block min-w-full align-middle">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
@@ -156,13 +191,24 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            <div class="mt-4">
-                                {{ $leaveRequests->appends(['month' => $month, 'year' => $year])->links() }}
-                            </div>
                         </div>
+                    </div>
+                    <div class="mt-4 px-4 sm:px-0">
+                        {{ $leaveRequests->appends(['month' => $month, 'year' => $year])->links() }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+@push('styles')
+<style>
+    @media (max-width: 640px) {
+        .min-w-full {
+            min-width: 640px;
+        }
+    }
+</style>
+@endpush
 @endsection

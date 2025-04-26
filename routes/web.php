@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\LeaveRequestController;
+use App\Http\Controllers\RecapController;
 use Illuminate\Support\Facades\Route;
 
 // Authentication Routes
@@ -26,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/presensi', [PresenceController::class, 'index'])->name('presence.index');
     Route::post('/presensi', [PresenceController::class, 'store'])->name('presence.store');
     Route::get('/presensi/rekap', [PresenceController::class, 'recap'])->name('presence.recap');
+    Route::get('/rekap', [RecapController::class, 'index'])->name('presence.recap');
     
     Route::get('/izin', [LeaveRequestController::class, 'index'])->name('leaves.index');
     Route::post('/izin', [LeaveRequestController::class, 'store'])->name('leaves.store');
