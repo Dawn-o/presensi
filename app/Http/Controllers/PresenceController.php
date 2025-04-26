@@ -16,8 +16,7 @@ class PresenceController extends Controller
         $clientIp = $request->ip();
         $allowedIp = env('ALLOWED_ABSEN_IP');
 
-        if (in_array($clientIp, ['192.168.1.33', '::1'])) {
-        } elseif ($clientIp !== $allowedIp) {
+        if ($clientIp !== $allowedIp) {
             return back()->with('error', 'Absensi hanya bisa dilakukan di jaringan kantor.');
         }
 
