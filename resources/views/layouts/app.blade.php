@@ -68,13 +68,17 @@
 
                 <div class="flex items-center">
                     @guest
-                        <a href="{{ route('login') }}"
+                        {{-- <a href="{{ route('login') }}"
                             class="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">
                             Masuk
                         </a>
                         <a href="{{ route('register') }}"
                             class="bg-indigo-600 text-white hover:bg-indigo-700 px-3 py-2 rounded-md text-sm font-medium">
                             Daftar
+                        </a> --}}
+                        <a href="{{ route('login') }}"
+                            class="bg-indigo-600 text-white hover:bg-indigo-700 px-3 py-2 rounded-md text-sm font-medium">
+                            Masuk
                         </a>
                     @else
                         <!-- Mobile menu button -->
