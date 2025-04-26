@@ -28,4 +28,7 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/izin', [LeaveRequestController::class, 'index'])->name('leaves.index');
     Route::post('/izin', [LeaveRequestController::class, 'store'])->name('leaves.store');
+    
+    Route::patch('/izin/{leave}/approve', [LeaveRequestController::class, 'approve'])->name('leaves.approve');
+    Route::patch('/izin/{leave}/reject', [LeaveRequestController::class, 'reject'])->name('leaves.reject');
 });

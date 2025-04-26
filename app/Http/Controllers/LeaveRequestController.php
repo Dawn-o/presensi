@@ -37,4 +37,36 @@ class LeaveRequestController extends Controller
         return redirect()->route('leaves.index')
             ->with('success', 'Leave request submitted successfully.');
     }
+
+    public function approve(LeaveRequest $leave)
+    {
+        // Check if user is admin
+        if (!auth()->user()->is_admin) {
+            return back()->with('error', 'Anda tidak memiliki akses untuk menyetujui izin.');
+        }
+
+        $leave->update([
+            'status' => 'approved',
+            'approved_by' => auth()->id(),
+            'approved_at' => now()
+        ]);
+
+        return back()->with('success', 'Izin berhasil disetujui.');
+    }
+
+    public function reject(LeaveRequest $leave)
+    {
+        // Check if user is admin
+        if (!auth()->user()->is_admin) {
+            return back()->with('error', 'Anda tidak memiliki akses untuk menolak izin.');
+        }
+
+        $leave->update([
+            'status' => 'rejected',
+            'rejected_by' => auth()->id(),
+            'rejected_at' => now()
+        ]);
+
+        return back()->with('success', 'Izin telah ditolak.');
+    }
 }

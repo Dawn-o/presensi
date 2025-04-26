@@ -12,16 +12,17 @@ class LeaveRequest extends Model
         'end_date',
         'type',
         'reason',
-        'status'
+        'status',
+        'approved_by',
+        'approved_at',
+        'rejected_by',
+        'rejected_at'
     ];
 
     protected $casts = [
         'start_date' => 'datetime',
-        'end_date' => 'datetime'
+        'end_date' => 'datetime',
+        'approved_at' => 'datetime',
+        'rejected_at' => 'datetime'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }
