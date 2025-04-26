@@ -48,16 +48,20 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Tanggal
                                         </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Jam Masuk
                                         </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Jam Pulang
                                         </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Status
                                         </th>
                                     </tr>
@@ -75,18 +79,27 @@
                                                 {{ $presence->check_out ? $presence->check_out->format('H:i') : '-' }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                    {{ $presence->status === 'present' ? 'bg-green-100 text-green-800' : 
-                                                       ($presence->status === 'late' ? 'bg-yellow-100 text-yellow-800' : 
-                                                        'bg-red-100 text-red-800') }}">
-                                                    {{ $presence->status === 'present' ? 'Tepat Waktu' : 
-                                                       ($presence->status === 'late' ? 'Terlambat' : 'Tidak Hadir') }}
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                    {{ $presence->status === 'present'
+                                                        ? 'bg-green-100 text-green-800'
+                                                        : ($presence->status === 'late'
+                                                            ? 'bg-yellow-100 text-yellow-800'
+                                                            : 'bg-red-100 text-red-800') }}">
+                                                    {{ $presence->status === 'present'
+                                                        ? 'Tepat Waktu'
+                                                        : ($presence->status === 'late'
+                                                            ? 'Terlambat'
+                                                            : 'Tidak Hadir') }}
                                                 </span>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="mt-4">
+                                {{ $presences->appends(['month' => $month, 'year' => $year])->links() }}
+                            </div>
                         </div>
                     </div>
 
@@ -96,16 +109,20 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Tanggal
                                         </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Jenis
                                         </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Alasan
                                         </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Status
                                         </th>
                                     </tr>
@@ -118,23 +135,27 @@
                                                 {{ $leave->end_date->translatedFormat('d F Y') }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $leave->type === 'sick' ? 'Sakit' : 
-                                                   ($leave->type === 'personal' ? 'Keperluan Pribadi' : 'Lainnya') }}
+                                                {{ $leave->type === 'sick' ? 'Sakit' : ($leave->type === 'personal' ? 'Keperluan Pribadi' : 'Lainnya') }}
                                             </td>
                                             <td class="px-6 py-4 text-sm text-gray-900">{{ $leave->reason }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                    {{ $leave->status === 'approved' ? 'bg-green-100 text-green-800' : 
-                                                       ($leave->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
-                                                        'bg-red-100 text-red-800') }}">
-                                                    {{ $leave->status === 'approved' ? 'Disetujui' : 
-                                                       ($leave->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                    {{ $leave->status === 'approved'
+                                                        ? 'bg-green-100 text-green-800'
+                                                        : ($leave->status === 'pending'
+                                                            ? 'bg-yellow-100 text-yellow-800'
+                                                            : 'bg-red-100 text-red-800') }}">
+                                                    {{ $leave->status === 'approved' ? 'Disetujui' : ($leave->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
                                                 </span>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="mt-4">
+                                {{ $leaveRequests->appends(['month' => $month, 'year' => $year])->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

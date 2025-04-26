@@ -43,7 +43,7 @@ class LeaveRequestController extends Controller
         $pendingLeaves = LeaveRequest::with('user')
             ->where('status', 'pending')
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('leaves.approvals', compact('pendingLeaves'));
     }

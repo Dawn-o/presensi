@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/approvals', [LeaveRequestController::class, 'approvals'])->name('leaves.approvals');
+    Route::get('/persetujuan', [LeaveRequestController::class, 'approvals'])->name('leaves.approvals');
     Route::patch('/izin/{leave}/approve', [LeaveRequestController::class, 'approve'])->name('leaves.approve');
     Route::patch('/izin/{leave}/reject', [LeaveRequestController::class, 'reject'])->name('leaves.reject');
 });

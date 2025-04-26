@@ -27,7 +27,7 @@ class PresenceController extends Controller
 
     protected function store(Request $request)
     {
-        $clientIp = $request->ip();
+        $clientIp = $request->ip(); 
         $allowedIp = env('ALLOWED_ABSEN_IP');
 
         if ($clientIp !== $allowedIp) {
@@ -51,7 +51,7 @@ class PresenceController extends Controller
             $message = 'Check in berhasil.';
         } else {
             // Check out
-            $presence->update([
+            $presence->update([ 
                 'check_out' => $now
             ]);
             $message = 'Check out berhasil.';
@@ -70,13 +70,13 @@ class PresenceController extends Controller
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
             ->latest()
-            ->get();
+            ->paginate(10);
 
         $leaveRequests = LeaveRequest::where('user_id', auth()->id())
             ->whereMonth('start_date', $month)
             ->whereYear('start_date', $year)
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('presence.recap', compact('presences', 'leaveRequests', 'month', 'year'));
     }
