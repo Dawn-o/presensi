@@ -14,9 +14,9 @@ class Presence extends Model
         'ip_address'
     ];
 
-    protected $dates = [
-        'check_in',
-        'check_out'
+    protected $casts = [
+        'check_in' => 'datetime',
+        'check_out' => 'datetime'
     ];
 
     public function user()
