@@ -59,25 +59,4 @@ class PresenceController extends Controller
 
         return back()->with('success', $message);
     }
-
-    public function recap()
-    {
-        $now = Carbon::now('Asia/Makassar');
-        $month = request('month', $now->month);
-        $year = request('year', $now->year);
-
-        $presences = Presence::where('user_id', auth()->id())
-            ->whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->latest()
-            ->paginate(10);
-
-        $leaveRequests = LeaveRequest::where('user_id', auth()->id())
-            ->whereMonth('start_date', $month)
-            ->whereYear('start_date', $year)
-            ->latest()
-            ->paginate(10);
-
-        return view('presence.recap', compact('presences', 'leaveRequests', 'month', 'year'));
-    }
 }
