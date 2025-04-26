@@ -1,9 +1,31 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PresenceController;
+use App\Http\Controllers\LeaveRequestController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['guest'])->group(function () {
-    Route::get('/presence', [PresenceController::class, 'index'])->name('presence.view');
-    Route::post('/presence', [PresenceController::class, 'store'])->name('presence.store');
+// Authentication Routes
+Route::middleware('guest')->group(function () {
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [LoginController::class, 'login']);
+    Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('register', [RegisterController::class, 'register']);
+});
+
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+// Protected Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('presence.index');
+    });
+    
+    Route::get('/presensi', [PresenceController::class, 'index'])->name('presence.index');
+    Route::post('/presensi', [PresenceController::class, 'store'])->name('presence.store');
+    Route::get('/presensi/rekap', [PresenceController::class, 'recap'])->name('presence.recap');
+    
+    Route::get('/izin', [LeaveRequestController::class, 'index'])->name('leaves.index');
+    Route::post('/izin', [LeaveRequestController::class, 'store'])->name('leaves.store');
 });
