@@ -53,7 +53,7 @@
                                     <label for="reason" class="block text-sm font-medium text-gray-700">Alasan</label>
                                     <textarea id="reason" name="reason" rows="3"
                                         class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                        required></textarea>
+                                        required placeholder="Jelaskan alasan pengajuan izin Anda"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -102,9 +102,13 @@
                                         {{ $leave->reason }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                            {{ $leave->status === 'approved' ? 'bg-green-100 text-green-800' : 
-                                               ($leave->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                            {{ $leave->status === 'approved'
+                                                ? 'bg-green-100 text-green-800'
+                                                : ($leave->status === 'pending'
+                                                    ? 'bg-yellow-100 text-yellow-800'
+                                                    : 'bg-red-100 text-red-800') }}">
                                             {{ $leave->status === 'approved' ? 'Disetujui' : ($leave->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
                                         </span>
                                     </td>
