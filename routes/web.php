@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\LeaveRequestController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/izin', [LeaveRequestController::class, 'index'])->name('leaves.index');
     Route::post('/izin', [LeaveRequestController::class, 'store'])->name('leaves.store');
     
+    Route::get('/karyawan', [EmployeeController::class, 'index'])->name('employees.index');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
