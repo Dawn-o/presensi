@@ -67,7 +67,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach ($presences as $presence)
+                                    @forelse ($presences as $presence)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 {{ $presence->created_at->translatedFormat('l, d F Y') }}
@@ -79,22 +79,21 @@
                                                 {{ $presence->check_out ? $presence->check_out->format('H:i') : '-' }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <span
-                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                    {{ $presence->status === 'present'
-                                                        ? 'bg-green-100 text-green-800'
-                                                        : ($presence->status === 'late'
-                                                            ? 'bg-yellow-100 text-yellow-800'
-                                                            : 'bg-red-100 text-red-800') }}">
-                                                    {{ $presence->status === 'present'
-                                                        ? 'Tepat Waktu'
-                                                        : ($presence->status === 'late'
-                                                            ? 'Terlambat'
-                                                            : 'Tidak Hadir') }}
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                    {{ $presence->status === 'present' ? 'bg-green-100 text-green-800' : 
+                                                       ($presence->status === 'late' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
+                                                    {{ $presence->status === 'present' ? 'Tepat Waktu' : 
+                                                       ($presence->status === 'late' ? 'Terlambat' : 'Tidak Hadir') }}
                                                 </span>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">
+                                                Tidak ada data presensi untuk bulan ini
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                             <div class="mt-4">
@@ -128,29 +127,33 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach ($leaveRequests as $leave)
+                                    @forelse ($leaveRequests as $leave)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 {{ $leave->start_date->translatedFormat('d F Y') }} -
                                                 {{ $leave->end_date->translatedFormat('d F Y') }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $leave->type === 'sick' ? 'Sakit' : ($leave->type === 'personal' ? 'Keperluan Pribadi' : 'Lainnya') }}
+                                                {{ $leave->type === 'sick' ? 'Sakit' : 
+                                                   ($leave->type === 'personal' ? 'Keperluan Pribadi' : 'Lainnya') }}
                                             </td>
                                             <td class="px-6 py-4 text-sm text-gray-900">{{ $leave->reason }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <span
-                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                    {{ $leave->status === 'approved'
-                                                        ? 'bg-green-100 text-green-800'
-                                                        : ($leave->status === 'pending'
-                                                            ? 'bg-yellow-100 text-yellow-800'
-                                                            : 'bg-red-100 text-red-800') }}">
-                                                    {{ $leave->status === 'approved' ? 'Disetujui' : ($leave->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                    {{ $leave->status === 'approved' ? 'bg-green-100 text-green-800' : 
+                                                       ($leave->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
+                                                    {{ $leave->status === 'approved' ? 'Disetujui' : 
+                                                       ($leave->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
                                                 </span>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">
+                                                Tidak ada pengajuan izin untuk bulan ini
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                             <div class="mt-4">
