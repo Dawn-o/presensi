@@ -78,11 +78,6 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alasan</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            @if(auth()->user()->is_admin)
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Aksi
-                            </th>
-                            @endif
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -105,26 +100,6 @@
                                     {{ $leave->status === 'approved' ? 'Disetujui' : 
                                        ($leave->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
                                 </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                @if($leave->status === 'pending' && auth()->user()->is_admin)
-                                    <div class="flex space-x-2">
-                                        <form action="{{ route('leaves.approve', $leave) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit" class="text-green-600 hover:text-green-900">
-                                                Setujui
-                                            </button>
-                                        </form>
-                                        <form action="{{ route('leaves.reject', $leave) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit" class="text-red-600 hover:text-red-900">
-                                                Tolak
-                                            </button>
-                                        </form>
-                                    </div>
-                                @endif
                             </td>
                         </tr>
                         @endforeach

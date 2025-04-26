@@ -32,6 +32,14 @@
                            class="{{ request()->routeIs('leaves.index') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Pengajuan Izin
                         </a>
+                        @auth
+                            @if(auth()->user()->is_admin)
+                                <a href="{{ route('leaves.approvals') }}"
+                                   class="{{ request()->routeIs('leaves.approvals') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                    Persetujuan Izin
+                                </a>
+                            @endif
+                        @endauth
                     </div>
                     @endauth
                 </div>

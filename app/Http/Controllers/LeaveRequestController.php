@@ -38,6 +38,16 @@ class LeaveRequestController extends Controller
             ->with('success', 'Leave request submitted successfully.');
     }
 
+    public function approvals()
+    {
+        $pendingLeaves = LeaveRequest::with('user')
+            ->where('status', 'pending')
+            ->latest()
+            ->get();
+
+        return view('leaves.approvals', compact('pendingLeaves'));
+    }
+
     public function approve(LeaveRequest $leave)
     {
         // Check if user is admin
