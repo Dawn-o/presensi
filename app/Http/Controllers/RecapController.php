@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Presence;
 use App\Models\LeaveRequest;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 
 class RecapController extends Controller
@@ -24,21 +25,45 @@ class RecapController extends Controller
             $user = auth()->user();
         }
 
-        $presences = Presence::where('user_id', $user->id)
+        // Create date period for the month
+        $startOfMonth = Carbon::create($year, $month, 1, 0, 0, 0, 'Asia/Makassar');
+        $endOfMonth = $startOfMonth->copy()->endOfMonth();
+        $period = CarbonPeriod::create($startOfMonth, $endOfMonth);
+
+        // Get all presences for the month
+        $presences = $user->presences()
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->latest()
-            ->paginate(10);
+            ->get()
+            ->keyBy(function($presence) {
+                return $presence->created_at->format('Y-m-d');
+            });
 
+        // Create monthly calendar
+        $monthlyCalendar = collect($period)->map(function($date) use ($presences) {
+            return [
+                'date' => $date,
+                'presence' => $presences->get($date->format('Y-m-d'))
+            ];
+        });
+
+        // Get user list for admin
+        $users = auth()->user()->is_admin ? User::where('is_admin', false)->get() : null;
+
+        // Get leave requests for the month
         $leaveRequests = LeaveRequest::where('user_id', $user->id)
             ->whereMonth('start_date', $month)
             ->whereYear('start_date', $year)
             ->latest()
             ->paginate(10);
 
-        // Get all users for admin selection
-        $users = auth()->user()->is_admin ? User::where('is_admin', false)->get() : null;
-
-        return view('presence.recap', compact('presences', 'leaveRequests', 'month', 'year', 'users', 'user'));
+        return view('presence.recap', compact(
+            'monthlyCalendar',
+            'month',
+            'year',
+            'users',
+            'user',
+            'leaveRequests'
+        ));
     }
 }

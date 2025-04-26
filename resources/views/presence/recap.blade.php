@@ -1,214 +1,268 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <div class="bg-white shadow rounded-lg">
-        <div class="p-4 sm:p-6">
-            <!-- Header Section -->
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-                <div class="flex-1 min-w-0">
-                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 truncate">
-                        Rekap Kehadiran {{ auth()->user()->is_admin && $user->id !== auth()->id() ? $user->name : '' }}
-                    </h2>
-                </div>
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow rounded-lg">
+            <div class="p-4 sm:p-6">
+                <!-- Header Section -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex flex-col space-y-2">
+                            <h2 class="text-xl sm:text-2xl font-bold text-gray-900">
+                                Rekap Kehadiran
+                            </h2>
+                            @if (auth()->user()->is_admin && $user->id !== auth()->id())
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-lg text-gray-600">{{ $user->name }}</span>
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                                        {{ $user->employee_id }}
+                                    </span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
 
-                <!-- Filters Section -->
-                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                    <!-- Month/Year Filter -->
-                    <form action="{{ route('presence.recap') }}" method="GET" 
-                          class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-                        @if(request('user_id'))
-                            <input type="hidden" name="user_id" value="{{ request('user_id') }}">
-                        @endif
-                        
-                        <select name="month" 
+                    <!-- Filters Section -->
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <form action="{{ route('presence.recap') }}" method="GET"
+                            class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                            @if (request('user_id'))
+                                <input type="hidden" name="user_id" value="{{ request('user_id') }}">
+                            @endif
+                            <input type="hidden" name="tab" value="{{ request('tab', 'attendance') }}">
+                            <select name="month" onchange="this.form.submit()"
                                 class="w-full sm:w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            @foreach(range(1, 12) as $m)
-                                <option value="{{ $m }}" {{ $month == $m ? 'selected' : '' }}>
-                                    {{ Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
-                                </option>
-                            @endforeach
-                        </select>
+                                @foreach (range(1, 12) as $m)
+                                    <option value="{{ $m }}" {{ $month == $m ? 'selected' : '' }}>
+                                        {{ Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
+                                    </option>
+                                @endforeach
+                            </select>
 
-                        <select name="year" 
+                            <select name="year" onchange="this.form.submit()"
                                 class="w-full sm:w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            @foreach(range(date('Y'), date('Y')-5) as $y)
-                                <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
-                                    {{ $y }}
-                                </option>
-                            @endforeach
-                        </select>
+                                @foreach (range(date('Y'), date('Y') - 5) as $y)
+                                    <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
+                                        {{ $y }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </form>
 
-                        <button type="submit" 
-                                class="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4v16M8 4v16M15 4v16M21 4v16" />
-                            </svg>
-                            Filter
-                        </button>
-                    </form>
-
-                    <!-- Admin User Selection -->
-                    @if(auth()->user()->is_admin)
-                    <div class="w-full sm:w-auto">
-                        <form action="{{ route('presence.recap') }}" method="GET">
-                            <select name="user_id" 
-                                    onchange="this.form.submit()"
-                                    class="w-full block pl-3 pr-10 py-2 text-base border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @if (auth()->user()->is_admin)
+                            <select name="user_id"
+                                onchange="window.location.href='{{ route('presence.recap') }}?user_id=' + this.value + '&month={{ $month }}&year={{ $year }}&tab={{ request('tab', 'attendance') }}'"
+                                class="w-full sm:w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 <option value="">Pilih Karyawan</option>
-                                @foreach($users as $u)
-                                    <option value="{{ $u->id }}" {{ $user->id === $u->id ? 'selected' : '' }}>
+                                @foreach ($users as $u)
+                                    <option value="{{ $u->id }}"
+                                        {{ request('user_id') == $u->id ? 'selected' : '' }}>
                                         {{ $u->name }} ({{ $u->employee_id }})
                                     </option>
                                 @endforeach
                             </select>
-                            <input type="hidden" name="month" value="{{ $month }}">
-                            <input type="hidden" name="year" value="{{ $year }}">
-                        </form>
+                        @endif
                     </div>
-                    @endif
                 </div>
-            </div>
 
-            <!-- Tables Section -->
-            <div class="mt-8 space-y-8">
-                <!-- Presence Table -->
-                <div class="overflow-hidden">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Kehadiran</h3>
-                    <div class="-mx-4 sm:-mx-6 lg:-mx-8 overflow-x-auto">
-                        <div class="inline-block min-w-full align-middle">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Tanggal
-                                        </th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Jam Masuk
-                                        </th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Jam Pulang
-                                        </th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Status
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    @forelse ($presences as $presence)
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $presence->created_at->translatedFormat('l, d F Y') }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $presence->check_in->format('H:i') }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $presence->check_out ? $presence->check_out->format('H:i') : '-' }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                    {{ $presence->status === 'present' ? 'bg-green-100 text-green-800' : 
-                                                       ($presence->status === 'late' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
-                                                    {{ $presence->status === 'present' ? 'Tepat Waktu' : 
-                                                       ($presence->status === 'late' ? 'Terlambat' : 'Tidak Hadir') }}
+                <!-- Tabs Navigation -->
+                <div class="mt-8 border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                        <a href="{{ route('presence.recap', ['tab' => 'attendance', 'month' => $month, 'year' => $year, 'user_id' => request('user_id')]) }}"
+                            class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm cursor-pointer attendance-tab {{ request('tab', 'attendance') === 'attendance' ? 'active-tab' : '' }}">
+                            Rekap Kehadiran
+                        </a>
+                        <a href="{{ route('presence.recap', ['tab' => 'leave', 'month' => $month, 'year' => $year, 'user_id' => request('user_id')]) }}"
+                            class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm cursor-pointer leave-tab {{ request('tab') === 'leave' ? 'active-tab' : '' }}">
+                            Riwayat Izin/Cuti
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Attendance Content -->
+                <div id="attendance-content"
+                    class="tab-content {{ request('tab', 'attendance') === 'attendance' ? '' : 'hidden' }}">
+                    <!-- Calendar Table -->
+                    <div class="mt-8 overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Hari
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Tanggal
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Jam Masuk
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Jam Pulang
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach ($monthlyCalendar as $day)
+                                    <tr class="{{ $day['date']->isWeekend() ? 'bg-gray-50' : '' }}">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $day['date']->translatedFormat('l') }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $day['date']->format('d M Y') }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $day['presence']?->check_in?->format('H:i') ?? '-' }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $day['presence']?->check_out?->format('H:i') ?? '-' }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            @if ($day['date']->isWeekend())
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                                    Hari Libur
                                                 </span>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">
-                                                Tidak ada data presensi untuk bulan ini
-                                            </td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="mt-4 px-4 sm:px-0">
-                        {{ $presences->appends(['month' => $month, 'year' => $year])->links() }}
+                                            @elseif($day['date']->isToday())
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                                    Hari Ini
+                                                </span>
+                                            @elseif($day['date']->isFuture())
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                                    -
+                                                </span>
+                                            @elseif(!$day['presence'])
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                    Tidak Hadir
+                                                </span>
+                                            @else
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                            {{ $day['presence']->status === 'present' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                                    {{ $day['presence']->status === 'present' ? 'Tepat Waktu' : 'Terlambat' }}
+                                                </span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- Leave Requests Table -->
-                <div class="overflow-hidden">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Izin/Cuti</h3>
-                    <div class="-mx-4 sm:-mx-6 lg:-mx-8 overflow-x-auto">
-                        <div class="inline-block min-w-full align-middle">
+                <!-- Leave Content -->
+                <div id="leave-content" class="tab-content {{ request('tab') === 'leave' ? '' : 'hidden' }}">
+                    <!-- Leave Requests Table -->
+                    <div class="mt-8">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">
+                            Riwayat Izin/Cuti
+                        </h3>
+                        <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th
+                                        <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Tanggal
+                                            Tanggal Mulai
                                         </th>
-                                        <th
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Tanggal Selesai
+                                        </th>
+                                        <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Jenis
                                         </th>
-                                        <th
+                                        <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Alasan
+                                            Keterangan
                                         </th>
-                                        <th
+                                        <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Status
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @forelse ($leaveRequests as $leave)
+                                    @forelse($leaveRequests as $leave)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $leave->start_date->translatedFormat('d F Y') }} -
+                                                {{ $leave->start_date->translatedFormat('d F Y') }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 {{ $leave->end_date->translatedFormat('d F Y') }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $leave->type === 'sick' ? 'Sakit' : 
-                                                   ($leave->type === 'personal' ? 'Keperluan Pribadi' : 'Lainnya') }}
+                                                {{ $leave->type === 'sick' ? 'Sakit' : 'Cuti' }}
                                             </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">{{ $leave->reason }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                    {{ $leave->status === 'approved' ? 'bg-green-100 text-green-800' : 
-                                                       ($leave->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
-                                                    {{ $leave->status === 'approved' ? 'Disetujui' : 
-                                                       ($leave->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
+                                            <td class="px-6 py-4 text-sm text-gray-900">
+                                                {{ $leave->description }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                            {{ $leave->status === 'approved'
+                                                ? 'bg-green-100 text-green-800'
+                                                : ($leave->status === 'pending'
+                                                    ? 'bg-yellow-100 text-yellow-800'
+                                                    : 'bg-red-100 text-red-800') }}">
+                                                    {{ $leave->status === 'approved' ? 'Disetujui' : ($leave->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
                                                 </span>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">
-                                                Tidak ada pengajuan izin untuk bulan ini
+                                            <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
+                                                Tidak ada data izin/cuti untuk periode ini
                                             </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="mt-4 px-4 sm:px-0">
-                        {{ $leaveRequests->appends(['month' => $month, 'year' => $year])->links() }}
+
+                        @if ($leaveRequests->hasPages())
+                            <div class="mt-4 px-4 sm:px-0">
+                                {{ $leaveRequests->appends(['month' => $month, 'year' => $year, 'user_id' => request('user_id')])->links() }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-@push('styles')
-<style>
-    @media (max-width: 640px) {
-        .min-w-full {
-            min-width: 640px;
-        }
-    }
-</style>
-@endpush
+    @push('styles')
+        <style>
+            .tab-btn {
+                color: #6B7280;
+                border-color: transparent;
+            }
+
+            .tab-btn:hover {
+                color: #4B5563;
+                border-color: #E5E7EB;
+            }
+
+            .active-tab {
+                color: #4F46E5;
+                border-color: #4F46E5;
+            }
+
+            .hidden {
+                display: none;
+            }
+        </style>
+    @endpush
 @endsection

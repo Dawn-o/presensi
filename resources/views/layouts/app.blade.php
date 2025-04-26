@@ -23,6 +23,8 @@
             },
         }
     </script>
+
+    @stack('styles')
 </head>
 
 <body class="min-h-screen bg-gray-100 font-sans">
