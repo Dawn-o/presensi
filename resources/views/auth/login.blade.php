@@ -7,7 +7,7 @@
                 <div>
                     <div class="flex justify-center">
                         <div
-                            class="h-16 w-16 sm:rounded-full bg-indigo-100 flex items-center justify-center transform transition-transform duration-300 hover:scale-110">
+                            class="h-16 w-16 rounded-full bg-indigo-100 flex items-center justify-center transform transition-transform duration-300 hover:scale-110">
                             <svg class="h-10 w-10 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
