@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'name' => 'Admin',
-                'employee_id' => '001',
+                'employee_id' => '000001',
                 'email' => 'admin@kostungu.com',
                 'password' => 'password123',
                 'is_admin' => true,
