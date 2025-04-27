@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $serverTime = now()->setTimezone('Asia/Makassar');
+        $timestamp = $serverTime->timestamp * 1000; // Convert to milliseconds for JavaScript
+    @endphp
+
     <div class="max-w-7xl mx-auto py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
         <!-- Page Header -->
         <div class="mb-6">
@@ -365,21 +370,38 @@
 
     @push('scripts')
         <script>
-            function updateClock() {
-                const now = new Date();
+            // Initialize with server time
+            let serverTime = new Date({{ $timestamp }});
+            let timeDiff = serverTime - new Date();
 
-                // Update clock
+            function updateClock() {
+                // Use server time + elapsed time since page load
+                const now = new Date(Date.now() + timeDiff);
+
+                // Update clock with WITA timezone (using colon separator)
                 const clockElement = document.getElementById('clock');
-                clockElement.textContent = now.toLocaleTimeString('id-ID', {
+                const timeOptions = {
+                    timeZone: 'Asia/Makassar',
                     hour: '2-digit',
                     minute: '2-digit',
                     second: '2-digit',
                     hour12: false
-                });
+                };
 
-                // Update date
+                // Format time manually to ensure colon separator
+                const formatter = new Intl.DateTimeFormat('id-ID', timeOptions);
+                const parts = formatter.formatToParts(now);
+                const time = parts
+                    .map(p => p.type === 'literal' ? ':' : p.value)
+                    .join('')
+                    .replace(/\./g, ':');
+
+                clockElement.textContent = time;
+
+                // Update date with WITA timezone (unchanged)
                 const dateElement = document.getElementById('date');
                 dateElement.textContent = now.toLocaleDateString('id-ID', {
+                    timeZone: 'Asia/Makassar',
                     weekday: 'long',
                     year: 'numeric',
                     month: 'long',
