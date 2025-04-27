@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="max-w-7xl mx-auto py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
-        <div class="bg-white shadow rounded-lg">
+        <div class="bg-white shadow sm:rounded-lg">
             <div class="p-4 sm:p-6">
                 <!-- Header Section -->
                 <div class="flex flex-col space-y-4">
@@ -14,7 +14,7 @@
                             <div class="mt-2 flex flex-wrap items-center gap-2">
                                 <span class="text-base sm:text-lg text-gray-600 truncate">{{ $user->name }}</span>
                                 <span
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                                    class="inline-flex items-center px-2.5 py-0.5 sm:rounded-full text-sm font-medium bg-gray-100 text-gray-800">
                                     {{ $user->employee_id }}
                                 </span>
                             </div>
@@ -28,7 +28,7 @@
                             <div class="relative">
                                 <select name="user_id"
                                     onchange="window.location.href='{{ route('presence.recap') }}?user_id=' + this.value + '&month={{ $month }}&year={{ $year }}&tab={{ request('tab', 'attendance') }}'"
-                                    class="appearance-none w-full pl-3 pr-10 py-2 text-sm border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                    class="appearance-none w-full pl-3 pr-10 py-2 text-sm border border-gray-300 bg-white sm:rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                                     <option value="">Pilih Karyawan</option>
                                     @foreach ($users as $u)
                                         <option value="{{ $u->id }}"
@@ -58,7 +58,7 @@
 
                             <div class="relative">
                                 <select name="month" onchange="this.form.submit()"
-                                    class="appearance-none w-full pl-3 pr-10 py-2 text-sm border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                    class="appearance-none w-full pl-3 pr-10 py-2 text-sm border border-gray-300 bg-white sm:rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                                     @foreach (range(1, 12) as $m)
                                         <option value="{{ $m }}" {{ $month == $m ? 'selected' : '' }}>
                                             {{ Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
@@ -78,7 +78,7 @@
 
                             <div class="relative">
                                 <select name="year" onchange="this.form.submit()"
-                                    class="appearance-none w-full pl-3 pr-10 py-2 text-sm border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                    class="appearance-none w-full pl-3 pr-10 py-2 text-sm border border-gray-300 bg-white sm:rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                                     @foreach (range(date('Y'), date('Y') - 5) as $y)
                                         <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
                                             {{ $y }}
@@ -126,7 +126,7 @@
                         <div class="block sm:hidden">
                             <div class="space-y-3">
                                 @foreach ($monthlyCalendar as $day)
-                                    <div class="bg-gray-50 rounded-lg p-3">
+                                    <div class="bg-gray-50 sm:rounded-lg p-3">
                                         <div class="flex justify-between items-start">
                                             <div>
                                                 <div class="font-medium text-gray-900">
@@ -147,20 +147,20 @@
                                             <div>
                                                 @if ($day['date']->isWeekend())
                                                     <span
-                                                        class="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">Libur</span>
+                                                        class="px-2 py-1 text-xs font-semibold sm:rounded-full bg-gray-100 text-gray-800">Libur</span>
                                                 @elseif($day['date']->isToday())
                                                     <span
-                                                        class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Hari
+                                                        class="px-2 py-1 text-xs font-semibold sm:rounded-full bg-blue-100 text-blue-800">Hari
                                                         Ini</span>
                                                 @elseif($day['date']->isFuture())
                                                     <span
-                                                        class="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">-</span>
+                                                        class="px-2 py-1 text-xs font-semibold sm:rounded-full bg-gray-100 text-gray-800">-</span>
                                                 @elseif(!$day['presence'])
                                                     <span
-                                                        class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Absen</span>
+                                                        class="px-2 py-1 text-xs font-semibold sm:rounded-full bg-red-100 text-red-800">Absen</span>
                                                 @else
                                                     <span
-                                                        class="px-2 py-1 text-xs font-semibold rounded-full 
+                                                        class="px-2 py-1 text-xs font-semibold sm:rounded-full 
                                                         {{ $day['presence']->status === 'present' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                                         {{ $day['presence']->status === 'present' ? 'Tepat' : 'Telat' }}
                                                     </span>
@@ -217,27 +217,27 @@
                                                 <td class="px-3 sm:px-6 py-4">
                                                     @if ($day['date']->isWeekend())
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full bg-gray-100 text-gray-800">
                                                             Libur
                                                         </span>
                                                     @elseif($day['date']->isToday())
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full bg-blue-100 text-blue-800">
                                                             Hari Ini
                                                         </span>
                                                     @elseif($day['date']->isFuture())
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full bg-gray-100 text-gray-800">
                                                             -
                                                         </span>
                                                     @elseif(!$day['presence'])
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full bg-red-100 text-red-800">
                                                             Absen
                                                         </span>
                                                     @else
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full 
                                                             {{ $day['presence']->status === 'present' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                                             {{ $day['presence']->status === 'present' ? 'Tepat' : 'Telat' }}
                                                         </span>
@@ -304,7 +304,7 @@
                                                 </td>
                                                 <td class="px-3 sm:px-6 py-4">
                                                     <span
-                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                        class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full 
                                                         {{ $leave->status === 'approved'
                                                             ? 'bg-green-100 text-green-800'
                                                             : ($leave->status === 'pending'

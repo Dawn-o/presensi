@@ -2,13 +2,13 @@
 
 @section('content')
     <div class="max-w-7xl mx-auto py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
-        <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+        <div class="bg-white shadow-sm sm:rounded-lg overflow-hidden">
             <div class="px-4 py-5 sm:px-6">
                 <h3 class="text-lg font-medium leading-6 text-gray-900">Daftar Pengajuan Izin Menunggu</h3>
             </div>
 
             @if (session('success'))
-                <div class="mx-4 mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                <div class="mx-4 mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 sm:rounded">
                     {{ session('success') }}
                 </div>
             @endif
@@ -30,7 +30,7 @@
                                                 @endif
                                             </p>
                                         </div>
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                        <span class="inline-flex items-center px-2.5 py-0.5 sm:rounded-full text-xs font-medium 
                                             {{ $leave->type === 'sick' ? 'bg-blue-100 text-blue-800' : 
                                                ($leave->type === 'personal' ? 'bg-yellow-100 text-yellow-800' : 
                                                 'bg-gray-100 text-gray-800') }}">
@@ -44,7 +44,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit"
-                                                class="bg-green-100 text-green-800 px-4 py-1.5 rounded-full text-sm font-medium
+                                                class="bg-green-100 text-green-800 px-4 py-1.5 sm:rounded-full text-sm font-medium
                                                 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500">
                                                 Setujui
                                             </button>
@@ -53,7 +53,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit"
-                                                class="bg-red-100 text-red-800 px-4 py-1.5 rounded-full text-sm font-medium
+                                                class="bg-red-100 text-red-800 px-4 py-1.5 sm:rounded-full text-sm font-medium
                                                 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500">
                                                 Tolak
                                             </button>
@@ -113,7 +113,7 @@
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit"
-                                                    class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium
+                                                    class="bg-green-100 text-green-800 px-3 py-1 sm:rounded-full text-xs font-medium
                                                     hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500">
                                                     Setujui
                                                 </button>
@@ -122,7 +122,7 @@
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit"
-                                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium
+                                                    class="bg-red-100 text-red-800 px-3 py-1 sm:rounded-full text-xs font-medium
                                                     hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500">
                                                     Tolak
                                                 </button>

@@ -8,7 +8,7 @@
                 <h1 class="text-2xl font-bold text-gray-900">Presensi</h1>
                 <div class="flex flex-col sm:flex-row w-full sm:w-auto space-y-2 sm:space-y-0 sm:space-x-2">
                     <a href="{{ route('employees.index') }}"
-                        class="inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        class="inline-flex items-center justify-center px-4 py-2 border border-gray-300 sm:rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -24,7 +24,7 @@
         @if ($errors->any() || session('error') || session('success'))
             <div class="mb-4">
                 @if ($errors->any())
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                    <div class="bg-red-50 border border-red-200 sm:rounded-lg p-4 mb-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -49,7 +49,7 @@
                 @endif
 
                 @if (session('error'))
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                    <div class="bg-red-50 border border-red-200 sm:rounded-lg p-4 mb-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -67,7 +67,7 @@
                 @endif
 
                 @if (session('success'))
-                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <div class="bg-green-50 border border-green-200 sm:rounded-lg p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -90,7 +90,7 @@
         <div class="md:grid md:grid-cols-3 md:gap-6 space-y-4 md:space-y-0">
             <!-- Time and Date Display -->
             <div class="md:col-span-1">
-                <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+                <div class="bg-white shadow sm:rounded-lg p-4 sm:p-6">
                     <div class="text-center">
                         <div id="clock" class="text-3xl sm:text-4xl font-bold text-gray-800"></div>
                         <div id="date" class="mt-2 text-base sm:text-lg text-gray-600"></div>
@@ -100,34 +100,23 @@
 
             <!-- Presence Card -->
             <div class="md:col-span-2">
-                <div class="bg-white shadow rounded-lg">
+                <div class="bg-white shadow sm:rounded-lg">
                     <div class="p-4 sm:p-6">
                         <div
                             class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
                             <h3 class="text-lg font-medium leading-6 text-gray-900">Absensi Hari Ini</h3>
-                            @if (auth()->user()->is_admin)
-                                <a href="{{ route('employees.index') }}"
-                                    class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    <svg class="sm:-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                    </svg>
-                                    Daftar Karyawan
-                                </a>
-                            @endif
                         </div>
 
                         <!-- Status and Check In/Out Section -->
                         <div class="mt-6">
-                            <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="bg-gray-50 sm:rounded-lg p-4">
                                 <div
                                     class="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0">
                                     <div class="space-y-1">
                                         <p class="text-sm font-medium text-gray-600 mb-1">Status Kehadiran</p>
                                         @if ($today)
                                             <span
-                                                class="px-3 py-1 text-sm rounded-full 
+                                                class="px-3 py-1 text-sm sm:rounded-full 
                                         {{ $today->status === 'present'
                                             ? 'bg-green-100 text-green-800'
                                             : ($today->status === 'late'
@@ -136,7 +125,7 @@
                                                 {{ $today->status === 'present' ? 'Tepat Waktu' : ($today->status === 'late' ? 'Terlambat' : 'Tidak Hadir') }}
                                             </span>
                                         @else
-                                            <span class="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-800">
+                                            <span class="px-3 py-1 text-sm sm:rounded-full bg-gray-100 text-gray-800">
                                                 Belum Absen
                                             </span>
                                         @endif
@@ -146,7 +135,7 @@
                                             class="w-full sm:w-auto">
                                             @csrf
                                             <button type="submit"
-                                                class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white {{ $today && $today->check_in ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700' }} transition-colors duration-200">
+                                                class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium sm:rounded-md text-white {{ $today && $today->check_in ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700' }} transition-colors duration-200">
                                                 <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -160,13 +149,13 @@
 
                                 @if ($today)
                                     <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                                        <div class="bg-white p-4 sm:rounded-lg shadow-sm">
                                             <p class="text-sm font-medium text-gray-500">Jam Masuk</p>
                                             <p class="mt-1 text-xl font-semibold text-gray-900">
                                                 {{ $today->check_in ? $today->check_in->format('H:i') : '-' }}
                                             </p>
                                         </div>
-                                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                                        <div class="bg-white p-4 sm:rounded-lg shadow-sm">
                                             <p class="text-sm font-medium text-gray-500">Jam Pulang</p>
                                             <p class="mt-1 text-xl font-semibold text-gray-900">
                                                 {{ $today->check_out ? $today->check_out->format('H:i') : '-' }}
@@ -183,7 +172,7 @@
 
         <!-- Monthly Attendance Section -->
         <div class="mt-6">
-            <div class="bg-white shadow rounded-lg overflow-hidden">
+            <div class="bg-white shadow sm:rounded-lg overflow-hidden">
                 <div class="p-4 sm:p-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">
                         Kehadiran Bulan {{ now()->translatedFormat('F Y') }}
@@ -193,7 +182,7 @@
                     <div class="block sm:hidden">
                         <div class="space-y-3">
                             @foreach ($monthlyCalendar as $day)
-                                <div class="bg-gray-50 rounded-lg p-3">
+                                <div class="bg-gray-50 sm:rounded-lg p-3">
                                     <div class="flex justify-between items-start">
                                         <div>
                                             <div class="font-medium text-gray-900">
@@ -262,27 +251,27 @@
                                                 <td class="px-3 sm:px-6 py-4">
                                                     @if ($day['date']->isWeekend())
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full bg-gray-100 text-gray-800">
                                                             Libur
                                                         </span>
                                                     @elseif($day['date']->isToday())
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full bg-blue-100 text-blue-800">
                                                             Hari Ini
                                                         </span>
                                                     @elseif($day['date']->isFuture())
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full bg-gray-100 text-gray-800">
                                                             -
                                                         </span>
                                                     @elseif(!$day['presence'])
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full bg-red-100 text-red-800">
                                                             Absen
                                                         </span>
                                                     @else
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full 
                                                             {{ $day['presence']->status === 'present' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                                             {{ $day['presence']->status === 'present' ? 'Tepat' : 'Telat' }}
                                                         </span>

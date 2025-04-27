@@ -18,7 +18,7 @@
             <div class="md:col-span-2">
                 <form action="{{ route('leaves.store') }}" method="POST">
                     @csrf
-                    <div class="shadow sm:rounded-md sm:overflow-hidden">
+                    <div class="shadow sm:sm:rounded-md sm:overflow-hidden">
                         <div class="px-4 py-5 bg-white space-y-4 sm:space-y-6 sm:p-6">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <!-- Date Inputs -->
@@ -27,7 +27,7 @@
                                         Tanggal Mulai
                                     </label>
                                     <input type="date" name="start_date" id="start_date"
-                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 sm:rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         required onchange="validateDates()">
                                 </div>
 
@@ -36,7 +36,7 @@
                                         Tanggal Selesai
                                     </label>
                                     <input type="date" name="end_date" id="end_date"
-                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 sm:rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         required onchange="validateDates()">
                                     <p id="dateError" class="mt-1 text-sm text-red-600 hidden">
                                         Tanggal selesai tidak boleh lebih awal dari tanggal mulai
@@ -50,7 +50,7 @@
                                     </label>
                                     <div class="relative mt-1">
                                         <select id="type" name="type"
-                                            class="appearance-none block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm pr-10"
+                                            class="appearance-none block w-full py-2 px-3 border border-gray-300 bg-white sm:rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm pr-10"
                                             required>
                                             <option value="">Pilih jenis izin</option>
                                             <option value="sick">Sakit</option>
@@ -71,14 +71,14 @@
                                         Alasan
                                     </label>
                                     <textarea id="reason" name="reason" rows="3"
-                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 sm:rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         required placeholder="Jelaskan alasan pengajuan izin Anda"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="px-4 py-3 bg-gray-50 sm:px-6">
                             <button type="submit"
-                                class="w-full sm:w-auto inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                class="w-full sm:w-auto inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium sm:rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Ajukan Izin
                             </button>
                         </div>
@@ -89,7 +89,7 @@
 
         <!-- History Table Section -->
         <div class="mt-8">
-            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="bg-white shadow overflow-hidden sm:sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">
                         Riwayat Pengajuan Izin
@@ -138,7 +138,7 @@
                                     </td>
                                     <td class="px-3 sm:px-6 py-4">
                                         <span
-                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold sm:rounded-full 
                                             {{ $leave->status === 'approved'
                                                 ? 'bg-green-100 text-green-800'
                                                 : ($leave->status === 'pending'
