@@ -24,6 +24,17 @@ class UpdatePasswordRequest extends FormRequest
         return [
             'current_password' => 'Password saat ini',
             'password' => 'Password baru',
+            'password_confirmation' => 'Konfirmasi password baru',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'current_password.required' => 'Password saat ini wajib diisi',
+            'password.required' => 'Password baru wajib diisi',
+            'password.min' => 'Password baru minimal 8 karakter',
+            'password.confirmed' => 'Konfirmasi password baru tidak cocok',
         ];
     }
 }

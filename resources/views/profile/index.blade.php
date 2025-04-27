@@ -67,37 +67,52 @@
                             @endif
 
                             <div class="space-y-4">
+                                <!-- Current Password Field -->
                                 <div>
                                     <label for="current_password" class="block text-sm font-medium text-gray-700">
                                         Password Saat Ini
                                     </label>
-                                    <input type="password" name="current_password" id="current_password"
-                                        class="mt-1 block w-full py-2.5 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-                                        required placeholder="Masukkan password Anda saat ini">
+                                    <input type="password" 
+                                        name="current_password" 
+                                        id="current_password"
+                                        class="mt-1 block w-full py-2.5 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm @error('current_password') border-red-300 @enderror"
+                                        required 
+                                        placeholder="Masukkan password Anda saat ini">
                                     @error('current_password')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
 
+                                <!-- New Password Field -->
                                 <div>
                                     <label for="password" class="block text-sm font-medium text-gray-700">
                                         Password Baru
                                     </label>
-                                    <input type="password" name="password" id="password"
-                                        class="mt-1 block w-full py-2.5 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-                                        required placeholder="Minimal 8 karakter">
+                                    <input type="password" 
+                                        name="password" 
+                                        id="password"
+                                        class="mt-1 block w-full py-2.5 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm @error('password') border-red-300 @enderror"
+                                        required 
+                                        placeholder="Minimal 8 karakter">
                                     @error('password')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
 
+                                <!-- Password Confirmation Field -->
                                 <div>
                                     <label for="password_confirmation" class="block text-sm font-medium text-gray-700">
                                         Konfirmasi Password Baru
                                     </label>
-                                    <input type="password" name="password_confirmation" id="password_confirmation"
-                                        class="mt-1 block w-full py-2.5 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-                                        required placeholder="Masukkan ulang password baru">
+                                    <input type="password" 
+                                        name="password_confirmation" 
+                                        id="password_confirmation"
+                                        class="mt-1 block w-full py-2.5 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm @error('password_confirmation') border-red-300 @enderror"
+                                        required 
+                                        placeholder="Masukkan ulang password baru">
+                                    @error('password_confirmation')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

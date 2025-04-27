@@ -20,13 +20,21 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         if (!Hash::check($request->current_password, $user->password)) {
-            return back()->with('error', 'Password saat ini tidak sesuai');
+            return back()
+                ->withInput()
+                ->withErrors(['current_password' => 'Password saat ini tidak sesuai']);
         }
 
-        $user->update([
-            'password' => Hash::make($request->password)
-        ]);
-
-        return back()->with('success', 'Password berhasil diubah');
+        try {
+            $user->update([
+                'password' => Hash::make($request->password)
+            ]);
+            
+            return back()->with('success', 'Password berhasil diubah');
+        } catch (\Exception $e) {
+            return back()
+                ->withInput()
+                ->withErrors(['error' => 'Terjadi kesalahan. Silakan coba lagi.']);
+        }
     }
 }
