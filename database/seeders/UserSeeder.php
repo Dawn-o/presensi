@@ -95,6 +95,20 @@ class UserSeeder extends Seeder
                 'password' => 'password123',
                 'is_admin' => false,
             ],
+            [
+                'name' => 'Firdaus Depa Ardhana',
+                'employee_id' => '025012',
+                'email' => 'alfaro@kostungu.com',
+                'password' => 'password123',
+                'is_admin' => false,
+            ],
+            [
+                'name' => 'Muhammad Aldy Febriwafi Munawwar',
+                'employee_id' => '025013',
+                'email' => 'alfaro@kostungu.com',
+                'password' => 'password123',
+                'is_admin' => false,
+            ],
         ];
 
         foreach ($users as $user) {
