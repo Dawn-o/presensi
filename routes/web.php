@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\LeaveRequestController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecapController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ Route::middleware('guest')->group(function () {
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 // Protected Routes
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return redirect()->route('presence.index');
     });
@@ -33,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/izin', [LeaveRequestController::class, 'store'])->name('leaves.store');
     
     Route::get('/karyawan', [EmployeeController::class, 'index'])->name('employees.index');
+    
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
