@@ -1,26 +1,27 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Presensi') }}
-        </h2>
-    </x-slot>
-
     @php
         $serverTime = now()->setTimezone('Asia/Makassar');
-        $timestamp = $serverTime->timestamp * 1000; // Convert to milliseconds for JavaScript
+        $timestamp = $serverTime->timestamp * 1000;
     @endphp
 
     <div class="max-w-7xl mx-auto py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
         <!-- Page Header -->
-        <x-page-header title="Presensi">
+        <x-page-header-card title="Presensi" subtitle="{{ now()->translatedFormat('l, d F Y') }}">
+            <x-slot name="icon">
+                <x-icons.clipboard class="h-6 w-6 text-indigo-600" />
+            </x-slot>
+
             <x-slot name="action">
                 <a href="{{ route('employees.index') }}"
-                    class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-300 sm:rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                    <x-icons.users class="h-5 w-5 -ml-1 mr-2 text-gray-500" />
+                    class="group w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 border border-gray-200 sm:rounded-lg shadow-sm text-sm font-medium text-indigo-700 bg-white hover:bg-indigo-50 hover:border-indigo-300 hover:shadow transition-all duration-200 ease-in-out">
+                    <span
+                        class="bg-indigo-100 p-1.5 rounded mr-2.5 group-hover:bg-indigo-200 transition-all duration-200">
+                        <x-icons.users class="h-4 w-4 text-indigo-600" />
+                    </span>
                     Daftar Karyawan
                 </a>
             </x-slot>
-        </x-page-header>
+        </x-page-header-card>
 
         <!-- Main Grid Layout -->
         <div class="grid grid-cols-12 gap-6">
