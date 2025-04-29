@@ -17,7 +17,7 @@
         </div>
         
         @if (isset($action))
-            <div>
+            <div class="w-full sm:w-auto">
                 {{ $action }}
             </div>
         @endif
