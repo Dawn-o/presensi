@@ -1,132 +1,72 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
     <div class="max-w-7xl mx-auto py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
-        <!-- Profile Information -->
-        <div class="space-y-6 sm:space-y-0 md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
-                <div class="px-0 sm:px-0">
-                    <h3 class="text-lg font-medium text-gray-900">Informasi Profil</h3>
-                    <p class="mt-1 text-sm text-gray-600">
-                        Informasi detail akun Anda.
-                    </p>
+        <!-- Profile Header -->
+        <div
+            class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden mb-8 transition-all duration-300 hover:shadow-lg">
+            <div class="relative">
+                <!-- Background with animated gradient -->
+                <div
+                    class="bg-gradient-to-r from-indigo-600 via-blue-500 to-indigo-700 h-32 md:h-48 relative overflow-hidden">
+                    <!-- Decorative elements -->
+                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-white rounded-full -mr-32 -mb-32 opacity-10">
+                    </div>
+                    <div class="absolute left-1/4 top-0 w-32 h-32 bg-indigo-300 rounded-full -ml-16 -mt-16 opacity-10">
+                    </div>
                 </div>
             </div>
-
-            <div class="mt-4 md:mt-0 md:col-span-2">
-                <div class="bg-white shadow sm:rounded-lg">
-                    <div class="p-4 sm:p-6">
-                        <dl class="space-y-4 sm:space-y-0 sm:divide-y sm:divide-gray-200">
-                            <div class="sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                                <dt class="text-sm font-medium text-gray-500">Nama</dt>
-                                <dd class="mt-1 sm:mt-0 text-sm text-gray-900 sm:col-span-2">{{ $user->name }}</dd>
-                            </div>
-                            <div class="sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                                <dt class="text-sm font-medium text-gray-500">ID Karyawan</dt>
-                                <dd class="mt-1 sm:mt-0 text-sm text-gray-900 sm:col-span-2">{{ $user->employee_id }}</dd>
-                            </div>
-                            <div class="sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                                <dt class="text-sm font-medium text-gray-500">Email</dt>
-                                <dd class="mt-1 sm:mt-0 text-sm text-gray-900 sm:col-span-2">{{ $user->email }}</dd>
-                            </div>
-                        </dl>
+            <div class="p-4 sm:p-6 -mt-16 sm:-mt-20 relative">
+                <div class="flex flex-col sm:flex-row sm:items-end gap-4">
+                    <div
+                        class="w-24 h-24 sm:w-32 sm:h-32 bg-white rounded-full border-4 border-white shadow-md flex items-center justify-center mx-auto sm:mx-0">
+                        <div
+                            class="bg-indigo-100 rounded-full p-3 w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center">
+                            <svg class="h-12 w-12 sm:h-16 sm:w-16 text-indigo-500" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">{{ $user->name }}</h1>
+                        <p class="text-gray-500 mt-1">{{ $user->employee_id }}</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Change Password Section -->
-        <div class="mt-8 sm:mt-12 space-y-6 sm:space-y-0 md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
-                <div class="px-0 sm:px-0">
-                    <h3 class="text-lg font-medium text-gray-900">Ubah Password</h3>
-                    <p class="mt-1 text-sm text-gray-600">
-                        Pastikan menggunakan password yang kuat dan belum pernah digunakan sebelumnya.
-                    </p>
-                </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Profile Information -->
+            <div class="lg:col-span-1">
+                <x-page-section title="Informasi Profil" description="Informasi detail akun Anda.">
+                    <x-slot name="icon">
+                        <div class="p-2 bg-blue-100 rounded-lg">
+                            <svg class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                    </x-slot>
+                    @include('partials.profile-details')
+                </x-page-section>
             </div>
 
-            <div class="mt-4 md:mt-0 md:col-span-2">
-                <form action="{{ route('profile.password.update') }}" method="POST">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="bg-white shadow sm:rounded-lg">
-                        <div class="p-4 sm:p-6">
-                            @if (session('success'))
-                                <div
-                                    class="mb-4 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md text-sm">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
-                            @if (session('error'))
-                                <div class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
-                                    {{ session('error') }}
-                                </div>
-                            @endif
-
-                            <div class="space-y-4">
-                                <!-- Current Password Field -->
-                                <div>
-                                    <label for="current_password" class="block text-sm font-medium text-gray-700">
-                                        Password Saat Ini
-                                    </label>
-                                    <input type="password" 
-                                        name="current_password" 
-                                        id="current_password"
-                                        class="mt-1 block w-full py-2.5 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm @error('current_password') border-red-300 @enderror"
-                                        required 
-                                        placeholder="Masukkan password Anda saat ini">
-                                    @error('current_password')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
-                                </div>
-
-                                <!-- New Password Field -->
-                                <div>
-                                    <label for="password" class="block text-sm font-medium text-gray-700">
-                                        Password Baru
-                                    </label>
-                                    <input type="password" 
-                                        name="password" 
-                                        id="password"
-                                        class="mt-1 block w-full py-2.5 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm @error('password') border-red-300 @enderror"
-                                        required 
-                                        placeholder="Minimal 8 karakter">
-                                    @error('password')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
-                                </div>
-
-                                <!-- Password Confirmation Field -->
-                                <div>
-                                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700">
-                                        Konfirmasi Password Baru
-                                    </label>
-                                    <input type="password" 
-                                        name="password_confirmation" 
-                                        id="password_confirmation"
-                                        class="mt-1 block w-full py-2.5 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm @error('password_confirmation') border-red-300 @enderror"
-                                        required 
-                                        placeholder="Masukkan ulang password baru">
-                                    @error('password_confirmation')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
+            <!-- Change Password Section -->
+            <div class="lg:col-span-2">
+                <x-page-section title="Ubah Password"
+                    description="Pastikan menggunakan password yang kuat dan belum pernah digunakan sebelumnya.">
+                    <x-slot name="icon">
+                        <div class="p-2 bg-amber-100 rounded-lg">
+                            <svg class="h-5 w-5 text-amber-600" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                            </svg>
                         </div>
-                        <div class="px-4 py-3 bg-gray-50 sm:px-6">
-                            <div class="flex justify-end">
-                                <button type="submit"
-                                    class="w-full sm:w-auto inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2.5 px-6 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200">
-                                    Simpan Perubahan
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                    </x-slot>
+                    @include('partials.change-password-form')
+                </x-page-section>
             </div>
         </div>
     </div>
-@endsection
+</x-app-layout>
