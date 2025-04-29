@@ -112,7 +112,7 @@
                     </div>
 
                     <!-- User dropdown section -->
-                    <div class="ml-3 relative hidden sm:block" x-data="{ open: false }">
+                    <div class="ml-3 relative hidden inset-x-0 sm:block z-50" x-data="{ open: false }">
                         <button @click="open = !open"
                             class="flex items-center space-x-3 py-2 px-3 sm:rounded-lg hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             <div class="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center">
@@ -181,9 +181,8 @@
         <!-- Mobile menu -->
         @auth
             <div class="sm:hidden fixed inset-x-0 top-16 z-50" x-show="mobileMenuOpen"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-150"
+                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-1"
+                x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-1"
                 @click.away="mobileMenuOpen = false">
                 <div class="bg-white shadow-lg border-b border-gray-200 max-h-[calc(100vh-4rem)] overflow-y-auto">
@@ -211,8 +210,7 @@
                                 class="{{ request()->routeIs('profile.index') ? 'bg-indigo-50 border-l-4 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-l-4 hover:border-gray-300' }} 
                                     block px-3 py-3 text-base font-medium transition-all duration-200">
                                 <div class="flex items-center">
-                                    <svg class="mr-4 h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
+                                    <svg class="mr-4 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                     </svg>
@@ -224,8 +222,7 @@
                                 class="{{ request()->routeIs('presence.index') ? 'bg-indigo-50 border-l-4 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-l-4 hover:border-gray-300' }} 
                     block px-3 py-3 text-base font-medium transition-all duration-200">
                                 <div class="flex items-center">
-                                    <svg class="mr-4 h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
+                                    <svg class="mr-4 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
@@ -237,8 +234,7 @@
                                 class="{{ request()->routeIs('presence.recap') ? 'bg-indigo-50 border-l-4 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-l-4 hover:border-gray-300' }} 
                     block px-3 py-3 text-base font-medium transition-all duration-200">
                                 <div class="flex items-center">
-                                    <svg class="mr-4 h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
+                                    <svg class="mr-4 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
@@ -250,8 +246,7 @@
                                 class="{{ request()->routeIs('leaves.index') ? 'bg-indigo-50 border-l-4 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-l-4 hover:border-gray-300' }} 
                     block px-3 py-3 text-base font-medium transition-all duration-200">
                                 <div class="flex items-center">
-                                    <svg class="mr-4 h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
+                                    <svg class="mr-4 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
@@ -281,8 +276,7 @@
                                 @csrf
                                 <button type="submit"
                                     class="w-full flex items-center px-3 py-3 text-base font-medium text-red-600 hover:bg-red-50 transition-colors duration-200">
-                                    <svg class="mr-4 h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
+                                    <svg class="mr-4 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                     </svg>
