@@ -11,31 +11,36 @@ class LeaveRequestController extends Controller
     {
         $leaves = LeaveRequest::where('user_id', auth()->id())
             ->latest()
-            ->get();
+            ->paginate(5);
 
         return view('leaves.index', compact('leaves'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'type' => 'required|in:sick,personal,other',
-            'reason' => 'required|string'
-        ]);
+        try {
+            $validated = $request->validate([
+                'start_date' => 'required|date',
+                'end_date' => 'required|date|after_or_equal:start_date',
+                'type' => 'required|in:sick,personal,other',
+                'reason' => 'required|string'
+            ]);
 
-        LeaveRequest::create([
-            'user_id' => auth()->id(),
-            'start_date' => $validated['start_date'],
-            'end_date' => $validated['end_date'],
-            'type' => $validated['type'],
-            'reason' => $validated['reason'],
-            'status' => 'pending'
-        ]);
+            LeaveRequest::create([
+                'user_id' => auth()->id(),
+                'start_date' => $validated['start_date'],
+                'end_date' => $validated['end_date'],
+                'type' => $validated['type'],
+                'reason' => $validated['reason'],
+                'status' => 'pending'
+            ]);
 
-        return redirect()->route('leaves.index')
-            ->with('success', 'Leave request submitted successfully.');
+            return redirect()->route('leaves.index')
+                ->with('success', 'Pengajuan izin berhasil dikirimkan.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan. Silakan periksa kembali data Anda dan coba lagi.');
+        }
     }
 
     public function approvals()
