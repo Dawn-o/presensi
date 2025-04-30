@@ -48,6 +48,6 @@
     </div>
 
     @push('scripts')
-        @include('partials.clock-script', ['timestamp' => $timestamp])
+        <x-scripts.clock-updater :timestamp="$timestamp" />
     @endpush
 </x-app-layout>

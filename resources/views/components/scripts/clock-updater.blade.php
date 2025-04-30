@@ -1,3 +1,5 @@
+@props(['timestamp'])
+
 <script>
     // Initialize with server time
     let serverTime = new Date({{ $timestamp }});
