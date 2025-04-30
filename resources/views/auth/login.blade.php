@@ -48,7 +48,8 @@
                 <button type="submit"
                     class="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium sm:rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out shadow-sm hover:shadow-md">
                     <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                        <x-icons.login class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 transition duration-150" />
+                        <x-icons.login
+                            class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 transition duration-150" />
                     </span>
                     Masuk
                 </button>
@@ -57,25 +58,6 @@
     </x-auth-card>
 
     @push('styles')
-        <style>
-            .error-input {
-                --tw-border-opacity: 1;
-                border-color: rgba(252, 165, 165, var(--tw-border-opacity));
-            }
-
-            .error-input:focus {
-                --tw-ring-opacity: 1;
-                --tw-ring-color: rgba(239, 68, 68, var(--tw-ring-opacity));
-                --tw-border-opacity: 1;
-                border-color: rgba(239, 68, 68, var(--tw-border-opacity));
-            }
-
-            input:-webkit-autofill,
-            input:-webkit-autofill:hover,
-            input:-webkit-autofill:focus {
-                -webkit-box-shadow: 0 0 0px 1000px white inset;
-                transition: background-color 5000s ease-in-out 0s;
-            }
-        </style>
+        <x-styles.autofill-input />
     @endpush
 </x-app-layout>
