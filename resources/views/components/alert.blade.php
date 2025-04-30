@@ -13,7 +13,7 @@
     <div class="flex">
         <div class="flex-shrink-0">
             @if ($type === 'success')
-                <x-icons.check class="h-5 w-5 {{ $iconColor }}" />
+                <x-icons.check-circle class="h-5 w-5 {{ $iconColor }}" />
             @else
                 <x-icons.warning class="h-5 w-5 {{ $iconColor }}" />
             @endif

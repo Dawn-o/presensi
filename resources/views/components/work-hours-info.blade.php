@@ -22,7 +22,7 @@
                         Wajib presensi di lingkungan kantor
                     </p>
                     <p class="flex items-center">
-                        <x-icons.check class="h-4 w-4 text-gray-400 mr-2" />
+                        <x-icons.check-circle class="h-4 w-4 text-gray-400 mr-2" />
                         Presensi pulang setelah jam 16.00
                     </p>
                 </dd>

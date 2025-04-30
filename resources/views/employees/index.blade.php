@@ -39,7 +39,7 @@
             <!-- Present Employees -->
             <x-stat-card title="Hadir" :value="$employees->filter(fn($e) => $e->presences->first())->count()" color="green">
                 <x-slot name="icon">
-                    <x-icons.check class="h-5 w-5 text-green-600" />
+                    <x-icons.check-circle class="h-5 w-5 text-green-600" />
                 </x-slot>
             </x-stat-card>
 
