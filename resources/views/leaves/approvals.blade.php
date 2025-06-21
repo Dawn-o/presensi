@@ -32,15 +32,9 @@
                 <div class="inline-block min-w-full align-middle">
                     <!-- Mobile View -->
                     <div class="sm:hidden space-y-4">
-                        @forelse($pendingLeaves as $leave)
+                        @foreach ($pendingLeaves as $leave)
                             @include('partials.leaves.mobile-leave-card', ['leave' => $leave])
-                        @empty
-                            <div class="bg-gray-50 rounded-lg p-8 text-center border border-gray-200">
-                                <x-icons.clipboard-check class="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                                <p class="text-gray-600 font-medium">Tidak ada pengajuan yang menunggu</p>
-                                <p class="text-gray-500 text-sm mt-1">Semua pengajuan izin telah diproses</p>
-                            </div>
-                        @endforelse
+                        @endforeach
                     </div>
 
                     <!-- Desktop View - Enhanced Table -->
